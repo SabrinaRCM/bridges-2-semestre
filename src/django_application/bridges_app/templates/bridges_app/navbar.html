@@ -1,0 +1,35 @@
+{% load static %}
+
+<div class="bg-blue fixed-top">
+    <a href="{% url 'gantt' %}">
+        <img src="{% static 'images/bridges-logobranco.png' %}" class="img-fluid mt-2 ml-2 pb-2" alt="logo Bridges"
+             id="logo">
+    </a>
+    <div class="btn-group float-right pt-0 mr-3">
+        <button type="button" class="btn btn-blue dropdown-toggle btnrounded mt-3" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            {% if user.is_authenticated %}
+                {{user.username|title}}
+            {% endif %}
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'import_excel' %}">Importar Excel</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Sair</a>
+        </div>
+    </div>
+    <a href="{% url 'gantt' %}" class="btn {% if 'gantt' in request.path %} active {% else %} btn-blue{% endif %} tamanho ml-5">Gantt</a>
+    <a href="{% url 'projetos' %}" class="btn {% if 'projetos' in request.path or 'project' in request.path %} active {% else %} btn-blue{% endif %} ml-5 tamanho">Projetos</a>
+    <a href="{% url 'Tarefas' %}" class="btn {% if 'tarefas' in request.path or 'task' in request.path %} active {% else %} btn-blue{% endif %} tamanho ml-5">Tarefas</a>
+    <a href="{% url 'funcionarios' %}" class="btn {% if 'funcionarios' in request.path or 'worker' in request.path %} active {% else %} btn-blue{% endif %} tamanho ml-5">Funcionários</a>
+    <a href="{% url 'agenda' %}" class="btn {% if 'agenda' in request.path or 'schedule' in request.path %} active {% else %} btn-blue{% endif %} tamanho ml-5">Agendamentos</a>
+</div>
+<div>
+    {% if messages %}
+    {% for message in messages %}
+    <div style="margin-bottom: -90px; padding-bottom: 0px;border-top-width: 10px;"
+         class='mt-5 pt-2 alert alert-success'>
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>

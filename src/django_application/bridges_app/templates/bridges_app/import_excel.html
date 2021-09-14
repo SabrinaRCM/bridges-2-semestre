@@ -1,0 +1,31 @@
+{% extends 'bridges_app/main.html' %}
+{% load static %}
+
+{% block title %}
+
+<title>Bridges - Importação de Excel</title>
+
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container mt-5 pt-4">
+
+    <br/>
+    <h2>Importar Arquivo - Excel</h2>
+    <hr/>
+    <br/>
+
+  
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="myfile">
+        <button type="submit">Upload</button>
+      </form>
+
+    <hr/>
+    <a href="{% url 'gantt' %}" class="btn btn-blue btn-sm mt-2  btn-block">Retornar à tela Principal</a>
+</div>
+{% endblock %}

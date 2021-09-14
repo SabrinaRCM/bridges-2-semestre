@@ -1,0 +1,96 @@
+{% extends 'bridges_app/main.html' %}
+{% load static %}
+
+{% block title %}
+
+<title>Bridges - Gantt</title>
+
+{% endblock %}
+
+{% block content %}
+
+
+        <div class="container mt-5 pt-5">
+          <div class="card" style="overflow: scroll">
+            <svg id="gantt"></svg>
+          </div>
+        </div>
+
+        <script>
+          var tasks = [
+            {% for agenda in agenda %}
+                {
+                id: '{{agenda.fk_tar_id}}',
+                custom_class: 'gantt-color',
+                name: '{{agenda.fk_tar}} - {{agenda.fk_fun}}',
+                start: '{{ agenda.dt_inicio|date:"Y" }}-{{ agenda.dt_inicio|date:"m" }}-{{ agenda.dt_inicio|date:"d" }}',
+                end: '{{ agenda.dt_fim|date:"Y" }}-{{ agenda.dt_fim|date:"m" }}-{{ agenda.dt_fim|date:"d" }}',
+                progress: '{{agenda.prog_tar}}'
+                },
+            {% endfor %}
+        ]
+          var gantt = new Gantt('#gantt', tasks, {
+            on_click: function (task) {
+              console.log(task);
+            },
+            on_date_change: function(task, start, end) {
+
+                // convertendo data para enviar alerta ao usuário
+                var data_convertida  = ""
+                var data_convertida2  = ""
+                data_convertida = data_convertida.concat(start.getDate(), "/", start.getMonth()+1, "/", start.getFullYear())
+                data_convertida2 = data_convertida2.concat(end.getDate(), "/", end.getMonth()+1, "/", end.getFullYear())
+                // alert(data_convertida);
+
+                // enviando o post para URL do django
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", '{% url 'update_gantt' %}', true);
+                xhr.setRequestHeader('Content-Type', 'text/plain');
+                xhr.send(JSON.stringify(task));
+                alert('Data da tarefa "' + task.name + '" alterada com Sucesso!\n' + 'Novo Data de Início: ' + data_convertida + '\nNova Data de Fim: ' + data_convertida2)
+            },
+            on_progress_change: function(task, progress) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", '{% url 'update_gantt' %}', true);
+                xhr.setRequestHeader('Content-Type', 'text/plain');
+                xhr.send(JSON.stringify(task));
+                alert('Progresso da tarefa ' + task.name + ' alterado para: ' + progress + '%' + ' com sucesso!')
+            },
+            on_view_change: function(mode) {
+              console.log(mode);
+            },
+            view_mode: 'Day',
+            language: 'ptBr',
+            });
+        </script>
+
+
+
+    <!-- Gráfico de indicadores - Funcionários -->
+    <div class="card-body">
+      <div class="row">
+        <!-- /.col -->
+        <div class="container mt-5">
+          <div class="col-md-7" style="margin-left: 200px;">
+                <p class="text-center">
+                    <strong>Indicador: Horas disponíveis para cada funcionário</strong>
+                </p>
+                {% for indicadores in indicadores %}
+                <!-- /.progress-group -->
+                <div class="progress-group mt-3">
+                    {{indicadores.id_fun}} - {{indicadores.nom_fun}}
+                    <span class="float-right">{% if indicadores.ocupacao == null %}0{% else %}{{indicadores.ocupacao}}%{% endif %}  (<b>{% if indicadores.duracao_tarefa == null %}0{% else %}{{indicadores.duracao_tarefa}}{% endif %}</b>/{{indicadores.limite}} hrs)</span>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar {% if indicadores.ocupacao > 80 %}bg-danger{% else %}bg-primary{% endif %}" style="width:{{indicadores.ocupacao}}%"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-7 mt-3"><br /><br /></div>
+            <!-- /.progress-group -->
+          </div>
+          <!-- /.col -->
+      </div>
+      <!-- /.row -->
+  </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'bridges_app/main.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+
+<title>Bridges - Editar Funcionário</title>
+
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="container mt-5 pt-4">
+
+      <br />
+      <h2>Editar Funcionário</h2>
+      <hr />
+      <br />
+
+      <form method="POST">
+
+        <div class="form-group">
+          {% csrf_token %}
+            <strong>{{ create_form|crispy }}</strong>
+
+          <button style="float:right; " class="btn btn-primary btn-block btn-sm mt-3 " type="submit">Editar</button>
+          <br />
+          <br />
+
+        </div>
+      </form>
+
+      <hr />
+    </div>
+{% endblock %}

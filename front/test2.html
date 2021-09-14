@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="generator" content="frappe">
+    <title>Test</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1,  shrink-to-fit=no"
+    />
+    <script src="js/frappe-gantt.min.js"></script>
+    <link rel="stylesheet" href="css/frappe-gantt.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+  </head>
+  <body class="body">
+    <div class="bg-blue">
+      <a href="main.html">
+        <img src="img/logonectobranco.svg" class="img-fluid mt-2 ml-2 pb-2" alt="logo Necto" style="width: 160px; height: 60px;">
+       </a>
+      <div class="btn-group float-right pt-1 mr-3">
+        <button type="button" class="btn btn-blue dropdown-toggle btnrounded mt-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Nome
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#">Alterar</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="index.html">Sair</a>
+        </div>
+      </div>
+      <a href="projetos.html" class="btn btn-blue ml-5 tamanho">Projetos</a>
+      <a href="funcionarios.html" class="btn btn-blue tamanho ml-5">Funcionários</a>
+      <a href="tarefas.html" class="btn btn-blue tamanho ml-5">Tarefas</a>
+    </div>
+    <div class="container mt-5">
+        <div class="card" style="overflow: scroll">
+          <svg id="gantt"></svg>
+        </div>
+    </div>
+  
+
+<script>
+  var tasks = [
+  {
+    id: 'Task 1',
+    name: 'Redesign website',
+    start: '2020-12-28',
+    end: '2020-12-31',
+    progress: 20,
+  },
+  {
+    id: 'Task 2',
+    name: 'Redesign website',
+    start: '2020-12-28',
+    end: '2020-12-31',
+    progress: 20,
+  },
+]
+var gantt = new Gantt('#gantt', tasks, {
+	on_click: function (task) {
+		console.log(task);
+	},
+	on_date_change: function(task, start, end) {
+		console.log(task, start, end);
+	},
+	on_progress_change: function(task, progress) {
+		console.log(task, progress);
+	},
+	on_view_change: function(mode) {
+    console.log(mode);
+  },
+  view_mode: 'Day',
+  language: 'ptBr',
+});  
+    </script>
+
+
+    
+    
+    <script src="js/jquery/jquery.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/snap.svg-min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/datatables/jquery.dataTables.min.js"></script>
+    <script src="js/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
