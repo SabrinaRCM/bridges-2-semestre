@@ -28,6 +28,39 @@ Como contribuição pessoal, fui responsável pela criação do front end do pro
 
 A tela acima foi gerada através do código: 
 ```HTML
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<title>Bridges - Login</title>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" media="screen"/>
+</head>
+<body class="loginpage">
+<div class="card text-center" id="containerlogin">
+    <div>
+        <img src="{% static 'images/bridges-logo.png' %}" class="img-fluid" alt="logo Bridges"
+             style="width: 130px; height: 135px;">
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-login btn-blue" type="submit">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
 ```
 
 #### Tela de projetos
@@ -35,6 +68,80 @@ A tela acima foi gerada através do código:
 
 A tela acima foi gerada através do código: 
 ```HTML
+{% extends 'bridges_app/main.html' %}
+{% load static %}
+
+{% block title %}
+
+<title>Bridges - Projetos</title>
+
+{% endblock %}
+
+{% block content %}
+
+   <div class="container mt-5 pt-4">
+
+      <br />
+      <h2>Cadastro de Projetos</h2>
+      <hr />
+
+      <form method="POST">
+      {% csrf_token %}
+       <div class="form-row">
+          <div class="col-md-5 mb-4">
+            <label for="validationTooltip01"><strong>{{ create_form.nom_pro.label_tag }}</strong></label>
+            {{ create_form.nom_pro }}
+            <div class="valid-tooltip">
+            </div>
+          </div>
+       </div>
+      <button style="float:right; " class="btn btn-primary btn-sm mt-1 btn-block" type="submit">Cadastrar</button>
+        <br/>
+         <br/>
+    <div>
+      </form>
+       <hr />
+        <P style="float:left; margin-left: 50px;Total"> Total Projetos Cadastrados: <b>{{total_projetos}}</b></P>
+  </div>
+
+          <div class="card shadow mb-4 col-md-11 mt-5 bg-transparent60" style="margin-left: 45px;">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered text-center"  width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th width="50" scope="col">Nome do Projeto</th>
+                  <th width="30" scope="col">Tempo Total do Projeto (horas)</th>
+                <th width="60" scope="col">Opções</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for projeto in projetos %}
+                <tr>
+
+                  <td>{{projeto.nom_pro}}</td>
+                  <td>
+                      {% if projeto.total_hours != NULL %}
+                        {{projeto.total_hours|stringformat:"02d"}}:{{projeto.total_minutes|stringformat:"02d"}}
+                    {% else %}
+                        00:00
+                    {% endif %}
+                  </td>
+                  <td>
+                    <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
+                    <a href="{% url 'update_project' projeto.id_pro %}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons mr-4">&#xE254;</i></a>
+                    <a href="{% url 'delete_project' projeto.id_pro %}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+
+{% endblock %}
 ```
 
 #### Tela do gráfico Gantt
