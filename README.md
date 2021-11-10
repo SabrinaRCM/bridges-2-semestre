@@ -21,7 +21,7 @@ A linguagem principal escolhida foi python, foi usado o framework Django para co
 
 ### Contribuições individuais/pessoais
 
-Como contribuição pessoal, fui responsável pela criação do front end do projeto, incluindo a implementação do gráfico Gantt. Os códigos foram fragmentados usando um renderizador de formulários chamado crispy forms, com ele conseguimos criar somente um cabeçalho e um rodapé e carrega-los nos templates HTML. Todas as telas são preenchidas com dados direto do banco de dados.Compartilharei a seguir algumas das telas e trechos de códigos utilizados. 
+Como contribuição pessoal, fui responsável pela criação do front end do projeto, incluindo a implementação do gráfico Gantt. Os códigos foram fragmentados usando um renderizador de formulários chamado crispy forms, com ele conseguimos criar somente um cabeçalho e um rodapé e carrega-los nos templates HTML. Todas as telas são preenchidas com dados direto do banco de dados. O projeto possui ao todo 18 templates HTML entre o header e o footer que foram criados separdamente e carregados com o crispy forms conforme exemplos, as telas principais: Gantt, Projetos, Tarefas, Funcionários e Agendamentos. Compartilharei a seguir algumas das telas principais e trechos dos códigos utilizados. 
 
 #### Tela de Login
 <img src="login.png"/>
